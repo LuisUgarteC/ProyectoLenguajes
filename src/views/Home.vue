@@ -25,7 +25,8 @@ export default {
         {
           title: "Title is a Filler Title",
           blogHTML: "This is a filler Blog post title!",
-          blogCoverPhoto: "beautiful-stories",
+          // blogCoverPhoto: "beautiful-stories",
+          blogCoverPhoto: "menu-chido2",
         },
         {
           title: "Title is a Filler Title2",
