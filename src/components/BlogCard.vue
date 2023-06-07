@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import Arrow from "../assets/Icons/arrow-right-light.svg"
-import Edit from "../assets/Icons/edit-regular.svg"
-import Delete from "../assets/Icons/trash-regular.svg"
+import Arrow from "../assets/Icons/arrow-right-light.svg";
+import Edit from "../assets/Icons/edit-regular.svg";
+import Delete from "../assets/Icons/trash-regular.svg";
 export default {
   name: "blogCard",
   props: ["post"],
-  comments: {
+  components: {
     Arrow,
     Edit,
     Delete,
@@ -33,7 +33,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .blog-card {
   position: relative;
   cursor: pointer;
@@ -42,11 +41,11 @@ export default {
   border-radius: 8px;
   background-color: #fff;
   min-height: 420px;
-  transition: .5s ease all;
+  transition: 0.5s ease all;
 
   &:hover {
-    transition: retoteZ(-1deg) scale(1.01);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: rotateZ(-1deg) scale(1.01);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
   .icons {
@@ -73,8 +72,6 @@ export default {
         .delete {
           path {
             fill: #fff;
-
-
           }
         }
       }
@@ -84,7 +81,7 @@ export default {
       }
 
       .edit,
-      .delete{
+      .delete {
         pointer-events: none;
         height: 15px;
         width: auto;
@@ -92,7 +89,7 @@ export default {
     }
   }
 
-  .img {
+  img {
     display: block;
     border-radius: 8px 8px 0 0;
     z-index: 1;
@@ -116,7 +113,7 @@ export default {
     }
 
     h6 {
-      font-weight: 400px;
+      font-weight: 400;
       font-size: 12px;
       padding-bottom: 16px;
     }
@@ -129,16 +126,16 @@ export default {
       padding-top: 20px;
       font-size: 12px;
       padding-bottom: 4px;
-      transition: .5s ease-in all;
+      transition: 0.5s ease-in all;
 
       &:hover {
         color: rgba(48, 48, 48, 0.8);
       }
+
       .arrow {
         width: 10px;
       }
     }
   }
 }
-
 </style>

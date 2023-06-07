@@ -153,7 +153,7 @@ header {
 		transform: translateX(-250px);
 	}
 
-	-mobile-nav-enter-to {
+	.mobile-nav-enter-to {
 		transform: translateX(0);
 	}
 
