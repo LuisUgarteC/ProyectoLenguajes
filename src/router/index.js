@@ -35,4 +35,10 @@ router.beforeEach((to, from, next) => {
   next(); 
 });
 
+router.beforeEach((to, from, next) => {
+  const favicon = document.querySelector('link[rel="icon"]');
+  favicon.href = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQHFvdVmP5sbs2W3o-HCY8XH9VDR7GfN3yk9oRMOVsfg&s'; 
+  next();
+});
+
 export default router;
