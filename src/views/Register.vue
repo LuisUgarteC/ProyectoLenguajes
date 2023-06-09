@@ -5,7 +5,7 @@
         ¿No tienes una cuenta?
         <router-link class="router-link" :to="{ name: 'Login' }">Login</router-link>
       </p>
-      <h2>Crea tu cuenta en 𐐘❤ඞා</h2>
+      <h2>Crea tu cuenta en Yojada Cuisine</h2>
       <div class="inputs">
         <div class="input">
           <input type="text" placeholder="Nombre" v-model="firstName" />
@@ -29,7 +29,7 @@
         </div>
         <div  v-show="error" class="error">{{ this.errorMsg }}</div>
       </div>
-      <button>Registrarse</button>
+      <button @click.prevent="register">Registrarse</button>
       <div class="angle"></div>
     </form>
     <div class="background"></div>
@@ -64,10 +64,10 @@ export default{
   methods: {
     async register() {
       if (
-        this.email !== "" ||
-        this.password !== "" ||
-        this.firstName !== "" ||
-        this.lastName !== "" ||
+        this.email !== "" &&
+        this.password !== "" &&
+        this.firstName !== "" &&
+        this.lastName !== "" &&
         this.username !== ""
       ) {
         this.error = false;
