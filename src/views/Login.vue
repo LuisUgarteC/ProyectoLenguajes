@@ -16,7 +16,7 @@
           <password class="icon" />
         </div>
       </div>
-      <router-link class="forgot-password" :to="{name: 'Forgot-Password' }">¿Olvidaste tu contraseña?</router-link>
+      <router-link class="forgot-password" :to="{name: 'ForgotPassword' }">¿Olvidaste tu contraseña?</router-link>
       <button>Iniciar Sesión</button>
       <div class="angle"></div>
     </form>
