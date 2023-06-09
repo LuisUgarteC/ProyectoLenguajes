@@ -3,7 +3,7 @@
     <div class="container">
       <div class="left">
         <div class="col-1">
-          <router-link class="header" :to="{ name: 'home' }">Yojada Cuisine</router-link>
+          <router-link class="header" :to="{ name: 'Home' }">Yojada Cuisine</router-link>
           <ul>
             <li>
               <a href="#"><youTube class="svg-icon"/></a>
@@ -23,7 +23,7 @@
           <ul>
             <router-link class="link" :to="{ name: 'Home' }">Inicio</router-link>
             <router-link class="link" :to="{ name: 'Recetas' }">Recetas</router-link>
-            <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Crear Publicación</router-link>
+            <router-link v-if="admin" class="link" to="#">Crear Publicación</router-link>
             <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
           </ul>
         </div>

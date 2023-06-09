@@ -27,6 +27,7 @@
           <input type="password" placeholder="Contraseña" v-model="password" />
           <password class="icon" />
         </div>
+        <div  v-show="error" class="error">{{ this.errorMsg }}</div>
       </div>
       <button>Registrarse</button>
       <div class="angle"></div>
@@ -39,7 +40,10 @@
 import email from "../assets/Icons/envelope-regular.svg";
 import password from "../assets/Icons/lock-alt-solid.svg";
 import user from "../assets/Icons/user-alt-light.svg";
-export default {
+import firebase from "firebase/app";
+import "firebase/auth";
+import db from "../firebase/firebaseInit";
+export default{
   name: "Register",
   components: {
     email,
@@ -56,7 +60,36 @@ export default {
       error: null,
       errorMsg: "",
     };
-  },  
+  },
+  methods: {
+    async register() {
+      if (
+        this.email !== "" ||
+        this.password !== "" ||
+        this.firstName !== "" ||
+        this.lastName !== "" ||
+        this.username !== ""
+      ) {
+        this.error = false;
+        this.errorMsg = "";
+        const firebaseAuth = await firebase.auth();
+        const createUser = await firebaseAuth.createUserWithEmailAndPassword(this.email, this.password);
+        const result = await createUser;
+        const dataBase = db.collection("users").doc(result.user.uid);
+        await dataBase.set({
+          firstName: this.firstName,
+          lastName: this.lastName,
+          username: this.username,
+          email: this.email,
+        });
+        this.$router.push({ name: "Home" });
+        return;
+      }
+      this.error = true;
+      this.errorMsg = "Please fill out the fields!";
+      return;
+    },
+  },
 };
 </script>
 
