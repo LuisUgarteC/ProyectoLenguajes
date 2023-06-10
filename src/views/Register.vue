@@ -2,7 +2,7 @@
   <div class="form-wrap">
     <form class="register">
       <p class="login-register">
-        ¿No tienes una cuenta?
+        ¿Ya tienes una cuenta?
         <router-link class="router-link" :to="{ name: 'Login' }">Login</router-link>
       </p>
       <h2>Crea tu cuenta en Yojada Cuisine</h2>

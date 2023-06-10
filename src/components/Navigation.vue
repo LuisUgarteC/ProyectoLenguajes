@@ -9,50 +9,50 @@
                 <router-link class="link" :to="{ name: 'Home' }">Inicio</router-link>
                 <router-link class="link" :to="{ name: 'Recetas' }">Recetas</router-link>
                 <router-link class="link" to="#">Crear Publicación</router-link>
-                <router-link class="link" :to="{ name: 'Login' }">Login/Register</router-link>
+                <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
             </ul>
-			<div class="profile" ref="profile">
-				<span>{{ this.$store.state.profileInitials }}</span>
-				<div class="profile-menu">
-					<div class="info">
-						<p class="initials">{{ this.$store.state.profileInitials }}</p>
-						<div class="right">
-							<p>{{ this.$store.state.profileFirstName }}{{ this.$store.state.profileLastName }}</p>
-							<p>{{ this.$store.state.profileUsername}}</p>
-							<p>{{ this.$store.state.profileEmail}}</p>
+						<div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
+							<span>{{ this.$store.state.profileInitials }}</span>
+							<div v-show="profileMenu" class="profile-menu">
+								<div class="info">
+									<p class="initials">{{ this.$store.state.profileInitials }}</p>
+									<div class="right">
+										<p>{{ this.$store.state.profileFirstName }} {{ this.$store.state.profileLastName }}</p>
+										<p>{{ this.$store.state.profileUsername }}</p>
+										<p>{{ this.$store.state.profileEmail }}</p>
+									</div>
+								</div>
+								<div class="options">
+									<div class="option">
+										<router-link class="option" :to="{ name: 'Profile' }">
+											<userIcon class="icon" />
+											<p>Profile</p>
+										</router-link>
+									</div>
+									<div v-if="admin" class="option">
+										<router-link class="option" :to="{ name: 'Admin' }">
+											<adminIcon class="icon" />
+											<p>Admin</p>
+										</router-link>
+									</div>
+									<div @click="signOut" class="option">
+										<signOutIcon class="icon" />
+										<p>Sign Out</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="options">
-						<div class="option">
-							<router-link class="option" to="#">
-								<userIcon class="icon" />
-								<p>Perfil</p>
-							</router-link>
-						</div>	
-						<div class="option" to="#">
-							<router-link class="option" to="#">
-								<adminIcon class="icon" />
-								<p>Administrador</p>
-							</router-link>
-						</div>	
-						<div class="option" to="#">
-								<signOutIcon class="icon" />
-								<p>Salir</p>
-						</div>	
-					</div>
-				</div>
-			</div>
-        </div>
-    </nav>
-    <menuIcon @click="toggleMobileNav" class="menu-icon" v-show="mobile"/>
-    <transition name="mobile-nav">
-        <ul class="mobile-nav" v-show="mobileNav">
-                <router-link class="link" :to="{ name: 'Home' }">Inicio</router-link>
-                <router-link class="link" :to="{ name: 'Recetas' }">Recetas</router-link>
-                <router-link class="link" to="#">Crear Publicación</router-link>
-                <router-link class="link" :to="{ name: 'Login' }">Login/Register</router-link>
-            </ul>
-    </transition>
+				</nav>
+		<menuIcon @click="toggleMobileNav" class="menu-icon" v-show="mobile"/>
+			<transition name="mobile-nav">
+					<ul class="mobile-nav" v-show="mobileNav">
+									<router-link class="link" :to="{ name: 'Home' }">Inicio</router-link>
+									<router-link class="link" :to="{ name: 'Recetas' }">Recetas</router-link>
+									<router-link class="link" to="#">Crear Publicación</router-link>
+									<router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
+							</ul>
+			</transition>
 </header>
 </template>
 
@@ -61,42 +61,59 @@ import menuIcon from "../assets/Icons/bars-regular.svg";
 import userIcon from "../assets/Icons/user-alt-light.svg";
 import adminIcon from "../assets/Icons/user-crown-light.svg";
 import signOutIcon from "../assets/Icons/sign-out-alt-regular.svg";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 export default {
-    name: 'navigation',
-    components: {
-        menuIcon,
+  name: 'navigation',
+  components: {
+		menuIcon,
 		userIcon,
 		adminIcon,
 		signOutIcon,
-    },
-		data() {
-			return {
-				mobile: null,
-				mobileNav: null,
-				windowWidth: null
-			};
-		},
-		created() {
-			window.addEventListener('resize', this.checkScreen);
-			this.checkScreen();
-		},
-		methods: {
-			checkScreen() {
-				this.windowWidth = window.innerWidth;
-				if (this.windowWidth <= 750) {
-					this.mobile = true;
-					return;
-				}
-				this.mobile = false;
-				this.mobileNav = false;
+  },
+	data() {
+		return {
+			profileMenu: null,
+			mobile: null,
+			mobileNav: null,
+			windowWidth: null,
+		};
+	},
+	created() {
+		window.addEventListener('resize', this.checkScreen);
+		this.checkScreen();
+	},
+	methods: {
+		checkScreen() {
+			this.windowWidth = window.innerWidth;
+			if (this.windowWidth <= 750) {
+				this.mobile = true;
 				return;
-			},
-
-			toggleMobileNav () {
-				this.mobileNav =! this.mobileNav;
-			},
+			}
+			this.mobile = false;
+			this.mobileNav = false;
+			return;
 		},
+
+		toggleMobileNav () {
+			this.mobileNav =! this.mobileNav;
+		},
+		toggleProfileMenu(e) {
+			if (e.target === this.$refs.profile) {
+				this.profileMenu = !this.profileMenu;
+			}
+		},
+		signOut() {
+			firebase.auth().signOut();
+			window.location.reload();
+		},
+	},
+	computed: {
+		user() {
+			return this.$store.state.user;
+		},
+	}
 };
 </script>
 
@@ -170,6 +187,10 @@ header {
 				border-radius: 50%;
 				color: #fff;
 				background-color: #303030;
+
+				span {
+					pointer-events: none;
+				}
 
 				.profile-menu{
 					position: absolute;
