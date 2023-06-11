@@ -5,7 +5,7 @@
         ¿No tienes una cuenta?
         <router-link class="router-link" :to="{name: 'Register' }">Regístrate</router-link>
       </p>
-      <h2>Inicia sesión en 𐐘❤ඞා</h2>
+      <h2>Inicia sesión en Yojada Cuisine</h2>
       <div class="inputs">
         <div class="input">
           <input type="text" placeholder="Correo" v-model="email">
@@ -17,9 +17,15 @@
         </div>
         <div  v-show="error" class="error">{{ this.errorMsg }}</div>
       </div>
-      <router-link class="forgot-password" :to="{name: 'ForgotPassword' }">¿Olvidaste tu contraseña?</router-link>
+      <router-link class="forgot-password" :to="{name: 'ForgotPassword' }">
+        ¿Olvidaste tu contraseña?</router-link
+      >
       <button @click.prevent="signIn">Iniciar Sesión</button>
       <div class="angle"></div>
+      <div>
+        <br> <br>
+        Volver a <router-link style="color: black;" :to="{ name: 'Home' }">Inicio</router-link>
+      </div>
     </form>
     <div class="background"></div>
   </div>
@@ -38,15 +44,17 @@ export default {
   },
   data() {
     return {
-      email: null,
-      password: null,
+      email: "",
+      password: "",
       error: null,
       errorMsg: "",
     };
   },
   methods:{
-    sigIn(){
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+    signIn(){ //fucking n
+      firebase
+      .auth()
+      .signInWithEmailAndPassword(this.email, this.password)
       .then(()=>{
         this.$router.push({name: "Home"});
         this.error = false;

@@ -13,7 +13,7 @@
     <div v-if="!user" class="updates">
       <div class="container">
         <h2>No te pierdas ninguna receta. Registrate ahora mismo</h2>
-        <router-link class="router-button" to="#">
+        <router-link class="router-button" to="Register">
           Registro para Yojada Cuisine <Arrow class="arrow arrow-light"/>
         </router-link>
       </div>

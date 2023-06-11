@@ -23,22 +23,19 @@ export default {
   },
   created() {
     firebase.auth().onAuthStateChanged(( user ) => {
-      this.$store.commit("updateUser",user );
-      if(user){
-        this.$store.dispatch("getCurrentUser");
+      this.$store.commit("updateUser", user);
+      if (user) {
+        this.$store.dispatch("getCurrentUser", user);
         console.log(this.$store.state.profileEmail);
       }
     });
     this.checkRoute();
+    // this.$store.dispatch("getPost"); para el futuro
   },
   mounted() {},
   methods: {
     checkRoute() {
-      if (
-        this.$route.name === "Login" || 
-        this.$route.name === "Register" || 
-        this.$route.name === "ForgotPassword"
-        ) {
+      if (this.$route.name === "Login" || this.$route.name === "Register" || this.$route.name === "ForgotPassword"){
           this.navigation = true;
           return;
       } 

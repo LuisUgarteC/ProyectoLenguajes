@@ -2,7 +2,7 @@
 <header>
     <nav class="container">
         <div class="branding">
-            <router-link class="header" :to="{ name: 'Home' }" style="color: white">Yojada Cuisine</router-link>
+            <router-link class="header" :to="{ name: 'Home' }">Yojada Cuisine</router-link>
         </div>
         <div class="nav-links">
             <ul v-show="!mobile">
@@ -44,7 +44,7 @@
 						</div>
 					</div>
 				</nav>
-		<menuIcon @click="toggleMobileNav" class="menu-icon" v-show="mobile"/>
+		<menuIcon @click="toggleMobileNav" class="menu-icon" v-show="mobile" />
 			<transition name="mobile-nav">
 					<ul class="mobile-nav" v-show="mobileNav">
 									<router-link class="link" :to="{ name: 'Home' }">Inicio</router-link>
@@ -97,13 +97,15 @@ export default {
 		},
 
 		toggleMobileNav () {
-			this.mobileNav =! this.mobileNav;
+			this.mobileNav = !this.mobileNav;
 		},
+
 		toggleProfileMenu(e) {
 			if (e.target === this.$refs.profile) {
 				this.profileMenu = !this.profileMenu;
 			}
 		},
+
 		signOut() {
 			firebase.auth().signOut();
 			window.location.reload();
@@ -119,8 +121,8 @@ export default {
 
 <style lang="scss" scoped>
 header {
-	background-color: #4d4d4d;
-	// background-color: #fff; 
+	// background-color: #4d4d4d;
+	background-color: #fff; 
 	padding: 0 25px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	z-index: 99;
@@ -132,7 +134,7 @@ header {
   // z-index: 999; /* Ajusta el valor del z-index si es necesario */
 
 	.link {
-		color: #fff; // Triste
+		// color: #fff; // Triste
 		font-weight: 500;
 		padding: 0 8px;
 		transition: 0.3s color ease;
@@ -176,6 +178,7 @@ header {
 					margin-right: 0;
 				}
 			}
+
 			.profile{
 				position: relative;
 				cursor: pointer;

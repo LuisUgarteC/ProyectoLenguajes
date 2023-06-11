@@ -31,6 +31,10 @@
       </div>
       <button @click.prevent="register">Registrarse</button>
       <div class="angle"></div>
+      <div>
+        <br> <br>
+        Volver a <router-link style="color: black;" :to="{ name: 'Home' }">Inicio</router-link>
+      </div>
     </form>
     <div class="background"></div>
   </div>
