@@ -90,7 +90,7 @@ export default{
         return;
       }
       this.error = true;
-      this.errorMsg = "Please fill out the fields!";
+      this.errorMsg = "Por favor llena todos los campos";
       return;
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="reset-password">
-    <Modal v-if="modalActive" :modaMessage="modalMessage" v-on:close-modal="closeModal"/>
+    <Modal v-if="modalActive" :modalMessage="modalMessage" v-on:close-modal="closeModal"/>
     <Loading v-if="loading"/>
     <div class="form-wrap">
       <form class="reset">
@@ -48,17 +48,17 @@ export default {
   methods: {
     resetPassword(){
       this.loading = true;
-      firebase.auth().sendPasswordResetEmail(this.email).then(()=>{
-        this.modaMessage = "Esta cuenta ya existe";
+      firebase
+      .auth()
+      .sendPasswordResetEmail(this.email)
+      .then(()=>{
+        this.modalMessage = "Si tu cuenta existe recibirás un correo."; // mal escroto
         this.loading = false;
         this.modalActive = true;
-
       }).catch(err => {
-        this.modaMessage = err.message;
+        this.modalMessage = err.message;
         this.loading = false;
         this.modalActive = true;
-
-
       });
 
     },
