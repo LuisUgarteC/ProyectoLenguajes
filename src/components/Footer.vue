@@ -23,7 +23,7 @@
           <ul>
             <router-link class="link" :to="{ name: 'Home' }">Inicio</router-link>
             <router-link class="link" :to="{ name: 'Recetas' }">Recetas</router-link>
-            <router-link v-if="admin" class="link" to="#">Crear Publicación</router-link>
+            <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Crear Publicación</router-link>
             <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
           </ul>
         </div>
@@ -52,6 +52,9 @@ export default {
     user() {
       return this.$store.state.user;
     },
+    admin() {
+			return this.$store.state.profileAdmin;
+		},
   },
 };
 </script>

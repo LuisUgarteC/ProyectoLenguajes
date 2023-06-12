@@ -5,7 +5,7 @@
       <div class="admin-info">
         <h2>Agregar Admin</h2>
         <div class="input">
-          <input placeholder="Enter user email to make them an admin" type="text" id="addAdmins" v-model="adminEmail" />
+          <input placeholder="Introduce un correo para hacerlo admin" type="text" id="addAdmins" v-model="adminEmail" />
         </div>
         <span>{{ this.functionMsg }}</span>
         <button @click="addAdmin" class="button">Enviar</button>

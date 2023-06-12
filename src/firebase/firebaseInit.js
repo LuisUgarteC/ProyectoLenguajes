@@ -2,12 +2,12 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 var firebaseConfig = {
-    apiKey: "AIzaSyDI-H5AI2--quVAGW9Q-uyK8NqbiN3OlG8",
-    authDomain: "yojadablogs.firebaseapp.com",
-    projectId: "yojadablogs",
-    storageBucket: "yojadablogs.appspot.com",
-    messagingSenderId: "31912250140",
-    appId: "1:31912250140:web:3a063436405cd4d7e488d9"
+  apiKey: "AIzaSyBF2odnwQ46dsd3WDjA-MMCSyou1ZB8NeI",
+  authDomain: "cuisine-49a2d.firebaseapp.com",
+  projectId: "cuisine-49a2d",
+  storageBucket: "cuisine-49a2d.appspot.com",
+  messagingSenderId: "161365241903",
+  appId: "1:161365241903:web:fa3a47bb2cfa32382516da"
   };
   
   const firebaseApp = firebase.initializeApp(firebaseConfig);
