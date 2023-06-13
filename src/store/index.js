@@ -14,7 +14,7 @@ export default new Vuex.Store({
       { blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "June 07, 2023"},
       { blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "June 07, 2023"},
     ],
-    blogHTML: "Escribe la receta aquí...",
+    blogHTML: "",
     blogTitle: "",
     blogPhotoName: "",
     blogPhotoFileURL: null,

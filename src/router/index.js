@@ -81,8 +81,8 @@ const routes = [
   path: "/post-preview",
   name: "BlogPreview",
   component: BlogPreview,
-  meta:{
-    title: "Create Post",
+  meta: {
+    title: "Preview Blog Post",
   },
 },
 ];

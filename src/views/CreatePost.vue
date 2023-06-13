@@ -1,25 +1,28 @@
 <template>
   <div class="create-post">
-    <BlogCoverPreview v-show="this.$store.state.blogPhotoPreview"/>
+    <BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
+    <Loading v-show="loading" />
     <div class="container">
-      <div :class="{invisible: !error}" class="err-message">
+      <div :class="{ invisible: !error }" class="err-message">
         <p><span>Error:</span>{{ this.errorMsg }}</p>
       </div>
       <div class="blog-info">
-        <input type="text" placeholder="Título de la Receta" v-model="blogTitle">
+        <input type="text" placeholder="Enter Blog Title" v-model="blogTitle" />
         <div class="upload-file">
-          <label for="blog-photo">Sube una foto</label>
-          <input type="file" ref="blogPhoto" id="blog-photo" @change="fileChange" accept=".png,.jpg,.jpeg" />
-          <button @click="openPreview" class="preview" :class="{ 'button-inactive': !this.$store.state.blogPhotoFileURL }">Previsualizar Foto</button>
+          <label for="blog-photo">Agregar Imagen de Inicio</label>
+          <input type="file" ref="blogPhoto" id="blog-photo" @change="fileChange" accept=".png, .jpg, ,jpeg" />
+          <button @click="openPreview" class="preview" :class="{ 'button-inactive': !this.$store.state.blogPhotoFileURL }">
+            Previsualizar foto
+          </button>
           <span>Archivo Seleccionado: {{ this.$store.state.blogPhotoName }}</span>
         </div>
       </div>
       <div class="editor">
-        <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler @image-added="imageHandler"/>
+        <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler @image-added="imageHandler" />
       </div>
       <div class="blog-actions">
-        <button @click="uploadBlog">Publicar</button>
-        <router-link class="router-button" to="{name:'BlogPreview'}">Previsualizar</router-link>
+        <button @click="uploadBlog">Publicar Receta</button>
+        <router-link class="router-button" :to="{ name: 'BlogPreview' }">Previsualizar Publicación</router-link>
       </div>
     </div>
   </div>
@@ -27,27 +30,32 @@
 
 <script>
 import BlogCoverPreview from "../components/BlogCoverPreview";
+import Loading from "../components/Loading";
 import firebase from "firebase/app";
 import "firebase/storage";
-//import db from "../firebase/firebaseInit";
+import db from "../firebase/firebaseInit";
 import Quill from "quill";
 window.Quill = Quill;
 const ImageResize = require("quill-image-resize-module").default;
 Quill.register("modules/imageResize", ImageResize);
 export default {
   name: "CreatePost",
-  data(){
+  data() {
     return {
       file: null,
       error: null,
       errorMsg: null,
+      loading: null,
       editorSettings: {
-        imageResize: {},
+        modules: {
+          imageResize: {},
+        },
       },
     };
   },
-  components:{
+  components: {
     BlogCoverPreview,
+    Loading,
   },
   methods: {
     fileChange() {
@@ -61,29 +69,79 @@ export default {
       this.$store.commit("openPhotoPreview");
     },
 
-    imageHandler( file, Editor, cursorLocation, resetUploader ) {
-        const storageRef = firebase.storage().ref();
-        const docRef = storageRef.child(`documents/blogPostPhotos/${file.name}`);
-        docRef.put(file).on(
-          "state_changed",
-          (snapshot) => {
+    imageHandler(file, Editor, cursorLocation, resetUploader) {
+      const storageRef = firebase.storage().ref();
+      const docRef = storageRef.child(`documents/blogPostPhotos/${file.name}`);
+      docRef.put(file).on(
+        "state_changed",
+        (snapshot) => {
           console.log(snapshot);
-
-        }, 
+        },
         (err) => {
           console.log(err);
         },
-         async () => {
+        async () => {
           const downloadURL = await docRef.getDownloadURL();
           Editor.insertEmbed(cursorLocation, "image", downloadURL);
           resetUploader();
         }
       );
     },
+
+    uploadBlog() {
+      if (this.blogTitle.length !== 0 && this.blogHTML.length !== 0) {
+        if (this.file) {
+          this.loading = true;
+          const storageRef = firebase.storage().ref();
+          const docRef = storageRef.child(`documents/BlogCoverPhotos/${this.$store.state.blogPhotoName}`);
+          docRef.put(this.file).on(
+            "state_changed",
+            (snapshot) => {
+              console.log(snapshot);
+            },
+            (err) => {
+              console.log(err);
+              this.loading = false;
+            },
+            async () => {
+              const downloadURL = await docRef.getDownloadURL();
+              const timestamp = await Date.now();
+              const dataBase = await db.collection("blogPosts").doc();
+
+              await dataBase.set({
+                blogID: dataBase.id,
+                blogHTML: this.blogHTML,
+                blogCoverPhoto: downloadURL,
+                blogCoverPhotoName: this.blogCoverPhotoName,
+                blogTitle: this.blogTitle,
+                profileId: this.profileId,
+                date: timestamp,
+              });
+              await this.$store.dispatch("getPost");
+              this.loading = false;
+              this.$router.push({ name: "ViewBlog", params: { blogid: dataBase.id } });
+            }
+          );
+          return;
+        }
+        this.error = true;
+        this.errorMsg = "Agrega una fota de inicio";
+        setTimeout(() => {
+          this.error = false;
+        }, 5000);
+        return;
+      }
+      this.error = true;
+      this.errorMsg = "Agrega un titulo y la receta";
+      setTimeout(() => {
+        this.error = false;
+      }, 5000);
+      return;
+    },
   },
   computed: {
-    profileId () {
-      return this.$store.profileId;
+    profileId() {
+      return this.$store.state.profileId;
     },
     blogCoverPhotoName() {
       return this.$store.state.blogPhotoName;
