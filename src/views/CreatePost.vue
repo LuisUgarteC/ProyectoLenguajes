@@ -15,11 +15,11 @@
         </div>
       </div>
       <div class="editor">
-        <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler />
+        <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler @image-added="imageHandler"/>
       </div>
       <div class="blog-actions">
         <button @click="uploadBlog">Publicar</button>
-        <router-link class="router-button" to="{name:'BlogPreviw'}">Previsualizar</router-link>
+        <router-link class="router-button" to="{name:'BlogPreview'}">Previsualizar</router-link>
       </div>
     </div>
   </div>
@@ -79,29 +79,6 @@ export default {
           resetUploader();
         }
       );
-    },
-    uploadBlog() {
-      if(this.blogTitle.length !== 0 && this.blogHTML.length !=0) {
-        if (this.file){
-
-          return;
-
-        }
-      this.error = true;
-      this.errorMsg = "Please ensure you uploaded a cover photo!";
-      setTimeout(() => {
-        this.error = false;
-
-      },5000 );
-      return;
-      }
-      this.error = true;
-      this.errorMsg = "Please ensure Blog Title & Blog Post has been filled!` ";
-      setTimeout(() => {
-        this.error = false;
-
-      },5000 );
-      return;
     },
   },
   computed: {
