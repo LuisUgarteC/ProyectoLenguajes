@@ -33,7 +33,7 @@ export default{
       welcomeScreen: {
         title: "Bienvenido/a",
         blogPost:
-          "Blogs semanales con recetas deliciosas para cada ocación. ¡Registrate hoy para no perderte ninguna receta!",
+          "Satisface tu pasión por la gastronomía: nuestro blog de recetas te inspira a crear platos memorables",
         welcomeScreen: true,
         photo: "comida",
       },
