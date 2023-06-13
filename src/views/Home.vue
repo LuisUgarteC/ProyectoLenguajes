@@ -33,7 +33,7 @@ export default{
       welcomeScreen: {
         title: "Bienvenido/a",
         blogPost:
-          "Satisface tu pasión por la gastronomía: nuestro blog de recetas te inspira a crear platos memorables",
+          "Satisface tu pasión por la gastronomía: nuestro blog de recetas te inspira a crear platos memorables.",
         welcomeScreen: true ,
         photo: "comida" ,
       },
