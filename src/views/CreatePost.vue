@@ -7,7 +7,7 @@
         <p><span>Error:</span>{{ this.errorMsg }}</p>
       </div>
       <div class="blog-info">
-        <input type="text" placeholder="Enter Blog Title" v-model="blogTitle" />
+        <input type="text" placeholder="Título" v-model="blogTitle" />
         <div class="upload-file">
           <label for="blog-photo">Agregar Imagen de Inicio</label>
           <input type="file" ref="blogPhoto" id="blog-photo" @change="fileChange" accept=".png, .jpg, ,jpeg" />
@@ -119,20 +119,20 @@ export default {
               });
               await this.$store.dispatch("getPost");
               this.loading = false;
-              this.$router.push({ name: "ViewBlog", params: { blogid: dataBase.id } });
+              this.$router.push({ name: "ViewRecipe", params: { blogid: dataBase.id } });
             }
           );
           return;
         }
         this.error = true;
-        this.errorMsg = "Agrega una fota de inicio";
+        this.errorMsg = " Agrega una fota de inicio";
         setTimeout(() => {
           this.error = false;
         }, 5000);
         return;
       }
       this.error = true;
-      this.errorMsg = "Agrega un titulo y la receta";
+      this.errorMsg = " Agrega un titulo y/o la receta";
       setTimeout(() => {
         this.error = false;
       }, 5000);

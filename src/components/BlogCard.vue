@@ -8,11 +8,11 @@
         <Delete class="delete"/>
       </div>
     </div>
-    <img :src="require(`../assets/blogCards/${post.blogCoverPhoto}.jpg`)" alt="">
+    <img :src="post.blogCoverPhoto" alt="">
     <div class="info">
       <h4>{{ post.blogTitle }}</h4>
-      <h6>Posted on: {{ post.blogDate }}</h6>
-      <router-link class="link" to="#">View The Post <Arrow class="arrow"/> </router-link>
+      <h6>Publicado el: {{ new Date(post.blogDate).toLocaleString('es-ES', {dateStyle: "long"}) }}</h6>
+      <router-link class="link" to="#">Mirar la receta <Arrow class="arrow"/> </router-link>
     </div>
   </div>
 </template>

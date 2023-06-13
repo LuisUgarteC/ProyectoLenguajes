@@ -1,12 +1,12 @@
 <template>
   <div class="home">
     <BlogPost v-if="!user" :post="welcomeScreen"/>
-    <BlogPost :post="post" v-for="(post, index) in sampleBlogPost" :key="index"/>
+    <BlogPost :post="post" v-for="(post, index) in blogPostsFeed" :key="index"/>
     <div class="blog-card-wrap">
       <div class="container">
-        <h3>View More Recent Blogs</h3>
+        <h3>Ver recetas más recientes</h3>
         <div class="blog-cards">
-          <BlogCard :post="post" v-for="(post, index) in sampleBlogCards" :key="index"/>
+          <BlogCard :post="post" v-for="(post, index) in blogPostsCards" :key="index"/>
         </div>
       </div>
     </div>
@@ -37,23 +37,26 @@ export default{
         welcomeScreen: true,
         photo: "comida",
       },
-      sampleBlogPost: [
-        {
-          title: "Title is a Filler Title",
-          blogHTML: "This is a filler Blog post title!",
-          blogCoverPhoto: "menu-chido2",
-        },
-        {
-          title: "Title is a Filler Title2",
-          blogHTML: "This is a filler Blog post title!",
-          blogCoverPhoto: "cheetos",
-        },
-      ],
+      // sampleBlogPost: [
+      //   {
+      //     title: "Title is a Filler Title",
+      //     blogHTML: "This is a filler Blog post title!",
+      //     blogCoverPhoto: "menu-chido2",
+      //   },
+      //   {
+      //     title: "Title is a Filler Title2",
+      //     blogHTML: "This is a filler Blog post title!",
+      //     blogCoverPhoto: "cheetos",
+      //   },
+      // ],
     };
   },
   computed: {
-    sampleBlogCards() {
-      return this.$store.state.sampleBlogCards
+    blogPostsFeed() {
+      return this.$store.getters.blogPostsFeed;
+    },
+      blogPostsCards() {
+      return this.$store.getters.blogPostsCards;
     },
     user() {
       return this.$store.state.user;

@@ -9,6 +9,7 @@ import Profile from "../views/Profile.vue";
 import Admin from "../views/Admin.vue";
 import CreatePost from "../views/CreatePost.vue";
 import BlogPreview from "../views/BlogPreview.vue";
+import ViewRecipe from "../views/ViewRecipe.vue";
 
 Vue.use(VueRouter);
 
@@ -83,6 +84,14 @@ const routes = [
   component: BlogPreview,
   meta: {
     title: "Preview Blog Post",
+  },
+},
+{
+  path: "/view-recipe",
+  name: "ViewRecipe",
+  component: ViewRecipe,
+  meta: {
+    title: "Ver publicación receta",
   },
 },
 ];
