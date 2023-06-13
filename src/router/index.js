@@ -11,6 +11,8 @@ import CreatePost from "../views/CreatePost.vue";
 import BlogPreview from "../views/BlogPreview.vue";
 import ViewRecipe from "../views/ViewRecipe.vue";
 import EditBlog from "../views/EditBlog.vue";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 Vue.use(VueRouter);
 
@@ -21,6 +23,7 @@ const routes = [
     component: Home,
     meta: {
       title: "Inicio",
+      requiresAuth: false,
     },
   },
   {
@@ -29,6 +32,7 @@ const routes = [
     component: Recetas,
     meta: {
       title: "Recetas",
+      requiresAuth: false,
     },
   },
   {
@@ -37,6 +41,7 @@ const routes = [
     component: Login,
     meta: {
       title: "Login",
+      requiresAuth: false,
     },
   },
   {
@@ -45,6 +50,7 @@ const routes = [
     component: Register,
     meta: {
       title: "Register",
+      requiresAuth: false,
     },
   },
   {
@@ -53,6 +59,7 @@ const routes = [
     component: ForgotPassword,
     meta: {
       title: "Forgot Password",
+      requiresAuth: false,
     },
   },
   {
@@ -61,6 +68,7 @@ const routes = [
     component: Profile,
     meta: {
       title: "Profile",
+      requiresAuth: true,
     },
   },
   {
@@ -69,6 +77,8 @@ const routes = [
     component: Admin,
     meta: {
       title: "Admin",
+      requiresAuth: true,
+      requiresAdmin: true,
     },
   },  
   {
@@ -77,6 +87,8 @@ const routes = [
   component: CreatePost,
   meta: {
     title: "Create Post",
+    requiresAuth: true,
+    requiresAdmin: true,
   },
 }, 
 {
@@ -84,7 +96,9 @@ const routes = [
   name: "BlogPreview",
   component: BlogPreview,
   meta: {
-    title: "Preview Blog Post",
+    title: "Preview Recipe Post",
+    requiresAuth: true,
+    requiresAdmin: true,
   },
 },
 {
@@ -93,6 +107,7 @@ const routes = [
   component: ViewRecipe,
   meta: {
     title: "Ver publicación receta",
+    requiresAuth: false,
   },
 },
 {
@@ -101,6 +116,8 @@ const routes = [
   component: EditBlog,
   meta: {
     title: "Edit Blog Post",
+    requiresAuth: true,
+    requiresAdmin: true,
   },
 },
 ];
@@ -120,6 +137,28 @@ router.beforeEach((to, from, next) => {
   const favicon = document.querySelector('link[rel="icon"]');
   favicon.href = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQHFvdVmP5sbs2W3o-HCY8XH9VDR7GfN3yk9oRMOVsfg&s'; 
   next();
+});
+
+router.beforeEach(async (to, from, next) => {
+  let user = firebase.auth().currentUser;
+  let admin = null;
+  if (user) {
+    let token = await user.getIdTokenResult();
+    admin = token.claims.admin;
+  }
+  if (to.matched.some((res) => res.meta.requiresAuth)) {
+    if (user) {
+      if (to.matched.some((res) => res.meta.requiresAdmin)) {
+        if (admin) {
+          return next();
+        }
+        return next({ name: "Home" });
+      }
+      return next();
+    }
+    return next({ name: "Home" });
+  }
+  return next();
 });
 
 export default router;
