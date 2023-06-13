@@ -58,7 +58,7 @@ const routes = [
     name: "ForgotPassword",
     component: ForgotPassword,
     meta: {
-      title: "Forgot Password",
+      title: "Olvidaste Constraseña",
       requiresAuth: false,
     },
   },
@@ -86,7 +86,7 @@ const routes = [
   name: "CreatePost",
   component: CreatePost,
   meta: {
-    title: "Create Post",
+    title: "Crear Post",
     requiresAuth: true,
     requiresAdmin: true,
   },
@@ -96,7 +96,7 @@ const routes = [
   name: "BlogPreview",
   component: BlogPreview,
   meta: {
-    title: "Preview Recipe Post",
+    title: "Preview receta",
     requiresAuth: true,
     requiresAdmin: true,
   },
@@ -115,7 +115,7 @@ const routes = [
   name: "EditBlog",
   component: EditBlog,
   meta: {
-    title: "Edit Blog Post",
+    title: "Editar Receta",
     requiresAuth: true,
     requiresAdmin: true,
   },
